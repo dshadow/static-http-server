@@ -1,6 +1,6 @@
 # Static HTTP Server
 
-[![Docker Size](https://img.shields.io/docker/image-size/dshadow/static-http-server/latest)](#) [![Docker Pulls](https://img.shields.io/docker/pulls/dshadow/static-http-server/latest)](https://hub.docker.com/r/dshadow/static-http-server) [![GitHub Repo](https://img.shields.io/badge/github-repo-yellowgreen)](https://github.com/dshadow/static-http-server)
+[![Docker Size](https://img.shields.io/docker/image-size/dshadow/static-http-server/latest)](#) [![GitHub Repo](https://img.shields.io/badge/github-repo-yellowgreen)](https://github.com/dshadow/static-http-server)
 
 Pico http server to serve static content only.
 
@@ -9,29 +9,53 @@ Pico http server to serve static content only.
 - Based on Go net/http 1.17 + scratch container
 - Designed for Docker Compose and Kubernetes (but can be used in other env.)
 
-## Usage
+### Simple usage with an example index.html
 
-### Run with an example index.html
 ```
-docker-compose up --build -d
-```
-
-### Run with a custom local folder
-1. Open docker-compose.yml
-2. Uncomment volumes
-3. Replace /local/www/folder with your own static folder
-4. Run
-```
-docker-compose up --build -d
+$ docker run -p 127.0.0.1:8080:8080 --name test-static-http-server -d dshadow/static-http-server
 ```
 
-### All command line arguments with example values
+### Simple usage with a custom www folder
+
 ```
--h					Show help and exit
--l :3000			Listening on all interfaces with tcp port 3000
--p /example/images	Prefix path
--s /www				Static folder with index.html and other files
+$ docker run -p 127.0.0.1:8080:8080 --name test-static-http-server -v /my/custom/www/folder:/www -d dshadow/static-http-server
 ```
+
+### Usage with docker-composer
+
+1. Create custom docker-compose.yml
+```
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+	  - /local/www/folder:/www
+```
+2. Replace /local/www/folder with your own static folder
+3. Build and run
+```
+$ docker-compose up --build -d
+```
+4. Stop and remove
+```
+$ docker-compose down
+```
+
+### Compile and use without containers
+```
+$ git clone https://github.com/dshadow/static-http-server.git
+$ go build -o shs shs.go
+$ ./shs -l :8080 -p /example/images -s /var/share/www
+```
+
+### Command line arguments
+- -h Show help and exit
+- -l Listening on all interfaces with a specified tcp port (default value: ":3000")
+- -p Path prefix (default value: "/")
+- -s Static folder with index.html and other files (default value: "/www")
 
 ## Contributing
 
