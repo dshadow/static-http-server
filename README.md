@@ -28,13 +28,13 @@ $ docker run -p 127.0.0.1:8080:8080 --name test-static-http-server -v /my/custom
 version: '3.8'
 services:
   web:
-    build: .
-    ports:
+    image: dshadow/static-http-server
+    expose:
       - 8080:8080
     volumes:
-	  - /local/www/folder:/www
+	  - /my/custom/www/folder:/www
 ```
-2. Replace /local/www/folder with your own static folder
+2. Replace /my/custom/www/folder with your own static folder
 3. Build and run
 ```
 $ docker-compose up --build -d
