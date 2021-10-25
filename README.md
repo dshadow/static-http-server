@@ -1,4 +1,7 @@
 # Static HTTP Server
+
+[![Docker Size](https://img.shields.io/docker/image-size/dshadow/static-http-server/latest)](#) [![Docker Pulls](https://img.shields.io/docker/pulls/dshadow/static-http-server/latest)](https://hub.docker.com/r/dshadow/static-http-server) [![GitHub Repo](https://img.shields.io/badge/github-repo-yellowgreen)](https://github.com/dshadow/static-http-server)
+
 Pico http server to serve static content only.
 
 ## Features
@@ -28,4 +31,22 @@ docker-compose up --build -d
 -l :3000			Listening on all interfaces with tcp port 3000
 -p /example/images	Prefix path
 -s /www				Static folder with index.html and other files
+```
+
+## Contributing
+
+Fork -> Patch -> Push -> Pull Request
+
+## Authors
+
+*  [Kostiantyn Cherednichenko](https://github.com/dshadow)
+
+## License
+
+MIT
+
+## Copyright
+
+```console
+Copyright (c) 2021 Kostiantyn Cherednichenko
 ```
