@@ -5,7 +5,7 @@
 Pico http server to serve static content only.
 
 ## Features
-- Fast and small! It's only 4.39MB !!!
+- Fast and small! It's only 4.34MB !!!
 - Based on github.com/valyala/fasthttp + scratch container
 - Designed for Docker Compose and Kubernetes (but can be used in other env.)
 
