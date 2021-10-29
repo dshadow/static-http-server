@@ -6,7 +6,7 @@ Pico http server to serve static content only.
 
 ## Features
 - Fast and small! It's only 4.39MB !!!
-- Based on Go net/http 1.17 + scratch container
+- Based on github.com/valyala/fasthttp + scratch container
 - Designed for Docker Compose and Kubernetes (but can be used in other env.)
 
 ### Simple usage with an example index.html
@@ -54,7 +54,7 @@ $ ./shs -l :8080 -p /example/images -s /var/share/www
 ### Command line arguments
 - -h Show help and exit
 - -l Listening on all interfaces with a specified tcp port (default value: ":3000")
-- -p Path prefix (default value: "/")
+- -c Enable compression
 - -s Static folder with index.html and other files (default value: "/www")
 
 ## Contributing
