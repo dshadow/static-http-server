@@ -9,6 +9,20 @@ Pico http server to serve static content only.
 - Based on github.com/valyala/fasthttp + scratch container
 - Designed for Docker Compose and Kubernetes (but can be used in other env.)
 
+## Changelog
+
+### Version 2.0.2, 2021-11-03
+- Add custom HTTP headers support
+
+### Version 2.0.1, 2021-11-02
+- Add not_found redirect option
+
+### Version 2.0.0
+- net/http was replaced with fasthttp
+- prefix option was removed
+
+## Usage
+
 ### Simple usage with an example index.html
 
 ```
@@ -57,6 +71,7 @@ $ ./shs -l :8080 -p /example/images -s /var/share/www
 - -c Enable compression
 - -s Static folder with index.html and other files (default value: "/www")
 - -r Redirect path if not found (example: /index.html), except: favicon.ico, robots.txt
+- -H Add custom HTTP headers (example: -H "Access-Control-Allow-Origin: *" -H "X-Content-Type-Options: nosniff")
 
 ## Contributing
 

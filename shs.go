@@ -8,10 +8,11 @@ package main
 import (
 	"flag"
 	"log"
+	"strings"
 	"github.com/valyala/fasthttp"
 )
 
-const version string = "2.0.1"
+const version string = "2.0.2"
 
 func main() {
 	log.Println("Static HTTP Server v" + version)
@@ -22,6 +23,7 @@ func main() {
 		usage bool
 		compress bool
 		redirect_path string
+		headers []string
 	)
 
 	flag.BoolVar(&usage, "h", false, "Show help and exit")
@@ -30,8 +32,21 @@ func main() {
 	flag.BoolVar(&compress, "c", false, "Use compression")
 	flag.StringVar(&redirect_path, "r", "", "Redirect path if not found (example: /index.html), except: favicon.ico, robots.txt")
 
+	// Parse custom headers
+	flag.Func("H", "Add additional HTTP headers (example: -H \"Access-Control-Allow-Origin: *\" -H \"X-Content-Type-Options: nosniff\")", func(s string) error {
+		header := strings.Split(s, ": ")
+
+		if len(header) != 2 {
+            log.Fatal("Invalid header: " + s)
+        }
+
+		headers = append(headers, header...)
+        
+        return nil
+    })
+
 	flag.Parse()
-	
+
 	if usage {
 		flag.Usage()
 		log.Fatal("Exiting...")
@@ -41,6 +56,7 @@ func main() {
 	log.Println("Folder: ", static_folder)
 	log.Println("Compresion: ", compress)
 	log.Println("Redirect path: ", redirect_path)
+	log.Println("Headers: ", headers)
 
 	// Validation
 	if listen == "" {
@@ -52,7 +68,6 @@ func main() {
     }
 
 	// Prepare server
-	//http.Handle(path_prefix, fs)
 	fs := &fasthttp.FS{
 		Root: static_folder,
 		IndexNames: []string{"index.html"},
@@ -79,6 +94,13 @@ func main() {
 				}
 			}
 		}
+
+		// Add custom headers
+		i := 0
+		for i < len(headers) {
+			ctx.Response.Header.Set(headers[i], headers[i + 1])
+			i += 2
+		}
 	}
 
 	log.Println("Listening for connection...")
@@ -88,3 +110,4 @@ func main() {
 
 	select {}
 }
+
